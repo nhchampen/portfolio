@@ -1,0 +1,199 @@
+/* ═══════════════════════════════════════
+   RESET
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root {
+  --bg:     #0D0D0F;
+  --bg2:    #141416;
+  --bg3:    #1C1C1F;
+  --text:   #F0EDEA;
+  --muted:  #6A6A74;
+  --faint:  #2A2A2E;
+  --accent: #B8FF57;
+  --warm:   #FF6B35;
+  --border: rgba(240,237,234,.07);
+  --fd: 'Syne', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --fc: 'JetBrains Mono', monospace;
+
+  /* --ca = couleur active. Vaut --accent par défaut, --warm en mode code.
+     Utilisée dans tous les composants — se propage même dans les scoped styles. */
+  --ca: #B8FF57;
+}
+
+body.cmode {
+  --ca: #FF6B35;
+}
+
+/* ═══════════════════════════════════════
+   BASE
+═══════════════════════════════════════ */
+html { background: var(--bg); color: var(--text); scroll-behavior: smooth; }
+body { font-family: var(--fb); font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+
+/* ═══════════════════════════════════════
+   PAGE TRANSITIONS
+═══════════════════════════════════════ */
+.page-enter-active,
+.page-leave-active { transition: opacity .35s ease, transform .35s ease; }
+.page-enter-from   { opacity: 0; transform: translateY(12px); }
+.page-leave-to     { opacity: 0; transform: translateY(-8px); }
+
+/* ═══════════════════════════════════════
+   KEYFRAMES
+═══════════════════════════════════════ */
+@keyframes pulse    { 0%,100%{opacity:1;} 50%{opacity:.2;} }
+@keyframes orbDrift { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-28px);} }
+@keyframes mqScroll { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+@keyframes rOrbit   { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+@keyframes blink    { 0%,100%{opacity:1;} 50%{opacity:0;} }
+@keyframes siPulse  { 0%,100%{opacity:.3;} 50%{opacity:.7;} }
+
+/* ═══════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════ */
+.btn-main {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .88rem 1.75rem; background: var(--ca); color: #0D0D0F;
+  font-family: var(--fb); font-size: .78rem; font-weight: 500;
+  text-decoration: none; letter-spacing: .09em; text-transform: uppercase;
+  clip-path: polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  transition: background .4s, transform .2s;
+  margin: 1rem 0;
+}
+.btn-main:hover { transform: translate(-3px,-3px); }
+.btn-sub { font-size: .78rem; color: var(--muted); text-decoration: none; letter-spacing: .06em; transition: color .3s; }
+.btn-sub:hover { color: var(--text); }
+
+/* ═══════════════════════════════════════
+   ASCII BLOCKS
+═══════════════════════════════════════ */
+.ascii {
+  font-family: var(--fc);
+  font-size: .62rem;
+  line-height: 1.55;
+  color: rgba(184,255,87,.22);
+  letter-spacing: .04em;
+  user-select: none;
+  white-space: pre;
+  transition: color .5s, text-shadow .5s, transform .4s;
+  pointer-events: none;
+}
+.ascii.lit {
+  color: rgba(184,255,87,.75);
+  text-shadow: 0 0 18px rgba(184,255,87,.25);
+}
+
+/* ═══════════════════════════════════════
+   HERO NAME — base styles (global car
+   -webkit-text-stroke ne passe pas bien
+   en scoped)
+═══════════════════════════════════════ */
+.h-name {
+  font-family: var(--fd);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 7.5vw, 9rem);
+  line-height: .87;
+  letter-spacing: -.045em;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+}
+.n-row   { display: block; overflow: hidden; }
+.n-inner { display: block; transform: translateY(115%); opacity: 0; }
+.n-ghost {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(240,237,234,.1);
+  transition: -webkit-text-stroke-color .6s;
+}
+.code-pre {
+  font-family: var(--fc);
+  font-size: clamp(1rem, 2vw, 2.2rem);
+  color: var(--warm);
+  font-weight: 400;
+  opacity: 0;
+  transform: translateX(-18px);
+  display: inline-block;
+  vertical-align: top;
+  margin-top: .12em;
+  transition: opacity .45s .1s, transform .45s .1s;
+}
+
+/* ═══════════════════════════════════════
+   ██████████████████████████████████████
+   BODY.CMODE — TOUS LES OVERRIDES ICI
+   Centralisé pour éviter les conflits
+   avec le CSS scopé des composants Vue
+   ██████████████████████████████████████
+═══════════════════════════════════════ */
+
+/* Cursor */
+body.cmode #app-cursor {
+  border-radius: 1px; width: 2px; height: 20px;
+  background: var(--warm);
+  animation: blink .9s step-end infinite;
+}
+body.cmode #app-cursor-ring { border-color: rgba(255,107,53,.3); }
+body.cmode #app-scanline    { background: linear-gradient(transparent, var(--warm), transparent); }
+
+/* Mode bar */
+body.cmode .mb-dot { background: var(--warm); }
+
+/* Nav */
+body.cmode .nav-logo em        { color: var(--warm); }
+body.cmode .nav-links a::after { background: var(--warm); }
+body.cmode .alt-pill           { color: var(--warm); border-color: rgba(255,107,53,.2); }
+body.cmode .alt-dot            { background: var(--warm); }
+
+/* Toggle */
+body.cmode .toggle-lbl.d { color: var(--muted); opacity: .5; }
+body.cmode .toggle-lbl.c { color: var(--warm);  opacity: 1; }
+body.cmode .toggle-thumb  { transform: translateX(15px); background: var(--warm); }
+
+/* ASCII */
+body.cmode .ascii     { color: rgba(255,107,53,.2); }
+body.cmode .ascii.lit { color: rgba(255,107,53,.7); text-shadow: 0 0 18px rgba(255,107,53,.2); }
+
+/* Bouton principal */
+body.cmode .btn-main { background: var(--warm); }
+
+/* Hero */
+body.cmode .h-orb               { background: radial-gradient(circle, rgba(255,107,53,.09) 0%, transparent 68%); }
+body.cmode .h-eyebrow::before   { background: var(--warm); }
+body.cmode .ey-d                { opacity: 0; transform: translateY(-8px); }
+body.cmode .ey-c                { opacity: 1; transform: translateY(0); }
+body.cmode .n-ghost             { -webkit-text-stroke-color: rgba(255,107,53,.28); }
+body.cmode .code-pre            { opacity: 1; transform: translateX(0); }
+body.cmode .hd-d                { opacity: 0; transform: translateY(-10px); }
+body.cmode .hd-c                { opacity: 1; transform: translateY(0); }
+
+/* Marquee */
+body.cmode .mq-item.a { color: var(--warm); }
+
+/* Section headers */
+body.cmode .sh-d { opacity: 0; transform: translateY(-7px); }
+body.cmode .sh-c { opacity: 1; transform: translateY(0); }
+
+/* Project cards */
+body.cmode .pcard:hover .code-ov { opacity: 1; pointer-events: auto; }
+body.cmode .pcard:hover .pn      { color: var(--warm); }
+body.cmode .pcard:hover .pa      { background: var(--warm); border-color: var(--warm); }
+
+/* Skills */
+body.cmode .sk-eyebrow { color: var(--warm); }
+body.cmode .tc::after  { background: var(--warm); }
+
+/* Duality */
+body.cmode .du-bg  { -webkit-text-stroke-color: rgba(255,107,53,.1); }
+body.cmode .du-q .d { color: rgba(184,255,87,.25); }
+body.cmode .du-q .c { color: var(--warm); }
+
+/* Contact / Footer */
+body.cmode .ct-cta a:hover          { color: var(--warm); }
+body.cmode .ct-bg                   { -webkit-text-stroke-color: rgba(255,107,53,.08); }
+body.cmode .avail-dot               { background: var(--warm); }
+body.cmode .ft-logo em              { color: var(--warm); }

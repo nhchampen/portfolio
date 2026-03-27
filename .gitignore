@@ -1,0 +1,34 @@
+# Nuxt
+.nuxt/
+.output/
+.data/
+.cache/
+
+# Dependencies
+node_modules/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Build
+dist/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+
+# Md files
+INITREAD.md

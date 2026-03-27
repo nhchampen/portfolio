@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npm run generate",
+  "outputDirectory": ".output/public",
+  "framework": "nuxtjs",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
