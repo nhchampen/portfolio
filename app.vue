@@ -1,27 +1,47 @@
 <template>
   <div>
+    <!-- Custom cursor -->
     <div id="app-cursor" :class="['app-cursor', { cmode: mode.isCode }]"></div>
     <div id="app-cursor-ring" :class="['app-cursor-ring', { cmode: mode.isCode }]"></div>
 
+    <!-- Scanline transition overlay -->
     <div id="app-scanline" ref="scanlineRef" :class="{ cmode: mode.isCode }"></div>
 
+    <!-- Mode bar (bottom center) -->
     <div class="app-modebar">
       <div class="mb-dot" :class="{ cmode: mode.isCode }"></div>
       <span v-if="!mode.isCode">mode design</span>
       <span v-else>// mode code</span>
     </div>
 
+    <!-- Loader — uniquement page d'accueil, une seule fois par session -->
+    <AppLoader v-if="showLoader" />
+
+    <!-- Layout -->
     <AppNav />
     <NuxtPage />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { useModeStore } from '~/stores/mode'
 import { useLenis } from '~/composables/useLenis'
 import { useCursor } from '~/composables/useCursor'
 
-const mode = useModeStore()
+const mode  = useModeStore()
+const route = useRoute()
+
+// Loader : uniquement page d'accueil + une seule fois par session
+const showLoader = ref(
+  import.meta.client
+    ? route.path === '/' && !sessionStorage.getItem('loader-done')
+    : false,
+)
+if (import.meta.client && showLoader.value) {
+  sessionStorage.setItem('loader-done', '1')
+}
 useLenis()
 useCursor()
 </script>

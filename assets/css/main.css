@@ -197,3 +197,10 @@ body.cmode .ct-cta a:hover          { color: var(--warm); }
 body.cmode .ct-bg                   { -webkit-text-stroke-color: rgba(255,107,53,.08); }
 body.cmode .avail-dot               { background: var(--warm); }
 body.cmode .ft-logo em              { color: var(--warm); }
+
+
+/* Code HTML Project */
+.s-kw { color: #ff79c6;}
+.s-vr { color: #8be9fd;}
+.s-fn { color: #ffb86c; }
+.s-st { color: #50fa7b;}
