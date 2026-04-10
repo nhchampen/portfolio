@@ -1,42 +1,42 @@
 ---
-title: ConnectIn
-tagline: Dashboard d'analytics produit temps réel avec visualisations D3.js personnalisées.
-type: Réseaux Sociaux
-year: 2026
-tags: [Vue 3, Nuxt, Tailwind, Laravel, API REST]
+title: Connect’In
+tagline: Réseau social interne d’entreprise – API Laravel + Frontend Tailwind
+type: Full-stack
+slug: connectin
+year: 2025
+tags: [Laravel, PHP, MySQL, Tailwind CSS, JavaScript, API REST, JWT]
 stats:
-  - { value: "200ms", label: "Render time" }
-  - { value: "15+", label: "Chart types" }
-  - { value: "98", label: "TypeScript coverage" }
+  - { value: "3", label: "rôles d’interaction" }
+  - { value: "0", label: "rechargement page" }
 next:
-  title: ConnectIn
-  slug: connectin
+  title: "My Cinema"
+  slug: "mycinema"
 ---
 
 ## Contexte
 
-Une startup SaaS avait besoin d'un tableau de bord interne pour visualiser les données comportementales de ses utilisateurs. La contrainte principale : tout devait être **temps réel** et **configurable** par les non-développeurs de l'équipe produit.
+Pour renforcer les liens entre collaborateurs d’une ESN, j’ai développé un réseau social interne complet : Connect’In. L’application permet aux employés de publier des messages, commenter, liker, et gérer leur profil. L’architecture sépare strictement un backend API REST (Laravel) d’un frontend statique qui consomme l’API. L’authentification par token (JWT) garantit que seuls les salariés connectés peuvent interagir.
 
-## Décisions d'architecture
+## Stack technique
 
-Choix de React plutôt que Vue pour ce projet spécifique car l'écosystème D3 + React est plus mature pour les visualisations complexes, et le reste de la stack de la startup était déjà en React.
+- **Backend** : Laravel (PHP, Eloquent ORM), JWT (via tymon/jwt-auth)
+- **Frontend** : HTML, Tailwind CSS, JavaScript (fetch)
+- **Base de données** : MySQL
+- **Outils** : Git, Postman, Swagger (documentation API)
+- **Bonus** : Pagination, filtrage des posts
 
-```ts
-// Chaque chart est un composable hook autonome
-const { ref: svgRef, update } = useD3LineChart({
-  data,
-  xKey: 'date',
-  yKey: 'value',
-  color: '#B8FF57',
-})
-```
+## Phase 1 : Conception BDD et modèles Laravel
 
-## Highlights Techniques
+J’ai dessiné le MCD (utilisateurs, posts, commentaires, likes) avec les relations : un post appartient à un user, un commentaire appartient à un user et à un post, un like est unique par (user, post). J’ai créé les migrations, les modèles Eloquent et les relations `hasMany`, `belongsTo`. J’ai implémenté la suppression de compte avec deux options : anonymisation des contenus ou suppression en cascade.
 
-- **Code splitting agressif** : chaque type de chart est `lazy()` importé — le bundle initial est sous 80kb
-- **WebWorker** pour les calculs de statistiques lourds (percentiles, moving averages) — le thread principal n'est jamais bloqué
-- **Redux Toolkit + RTK Query** pour la gestion du cache des requêtes API avec invalidation automatique
+## Phase 2 : API et authentification
 
-## Design
+J’ai exposé des endpoints REST : `/api/register`, `/api/login`, `/api/posts` (CRUD), `/api/posts/{id}/comments`, `/api/posts/{id}/like`. Le middleware `auth:api` protège les routes sensibles. Dans les contrôleurs, j’ai vérifié les autorisations (policy : seul l’auteur peut modifier/supprimer son post). Les likes sont toggle (un seul like par utilisateur). Les réponses JSON sont structurées pour être consommées directement par le frontend.
 
-La palette reprend intentionnellement les codes des terminaux (fond sombre, données en vert phosphore) pour que les données se lisent comme du code — cohérence avec l'usage développeur de l'outil.
+## Phase 3 : Frontend dynamique sans rechargement
+
+Le frontend en Tailwind CSS affiche le fil d’actualité. À chaque action (ajout de post, like, commentaire), JavaScript envoie une requête `fetch` avec le token JWT stocké dans `localStorage`. La réponse met à jour le DOM (nouveau post ajouté en haut, compteur de likes incrémenté). Aucune page ne se recharge. J’ai ajouté une pagination infinie et un filtre par date.
+
+## Résultat
+
+Un réseau social interne complet, fluide et sécurisé. Les utilisateurs peuvent interagir en temps réel. L’API est documentée avec Swagger, le diagramme BDD est fourni. Le projet a été livré avec un README d’installation (migrations, seeders, clé JWT). Ce fut une excellente mise en pratique de Laravel et de l’intégration API-frontend.

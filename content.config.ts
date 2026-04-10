@@ -9,7 +9,7 @@ export default defineContentConfig({
         title:   z.string(),
         tagline: z.string(),
         type:    z.string(),
-        year:    z.number(),
+        year:    z.union([z.number(), z.string()]),
         tags:    z.array(z.string()),
         stats: z.array(z.object({
           value: z.string(),

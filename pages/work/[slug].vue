@@ -9,7 +9,7 @@
         <span class="cs-year">{{ doc.year }}</span>
       </div>
 
-      <h1 class="cs-title">{{ doc.title }}</h1>
+      <h1 class="cs-title" style="color: var(--text); text-decoration: none; cursor: default;">{{ doc.title }}</h1>
       <p class="cs-tagline">{{ doc.tagline }}</p>
 
       <div class="cs-tags">
@@ -27,7 +27,31 @@
 
     <!-- Contenu Markdown -->
     <article class="cs-content">
-      <ContentRenderer :value="doc" />
+      <ContentRenderer :value="doc" v-slot="{ body }">
+        <template v-for="(node, i) in body.children">
+          <component
+            :is="node.tag"
+            v-bind="node.props"
+            v-if="node.tag !== 'h2' || !/résultat/i.test(node.children?.[0]?.text || '')"
+            :key="i"
+          >
+            <template v-for="child in node.children">
+              <component :is="child.tag || 'span'" v-bind="child.props">{{ child.text }}</component>
+            </template>
+          </component>
+          <!-- Résultat section avec lien externe si doc.resultUrl -->
+          <template v-if="node.tag === 'h2' && /résultat/i.test(node.children?.[0]?.text || '')">
+            <component :is="node.tag" v-bind="node.props" :key="'res-'+i">
+              <template v-for="child in node.children">
+                <component :is="child.tag || 'span'" v-bind="child.props">{{ child.text }}</component>
+              </template>
+              <template v-if="doc.resultUrl">
+                <a :href="doc.resultUrl" target="_blank" rel="noopener" style="margin-left:1em; font-size:0.8em; color:var(--ca); text-decoration:underline;">Voir le projet ↗</a>
+              </template>
+            </component>
+          </template>
+        </template>
+      </ContentRenderer>
     </article>
 
     <!-- Projet suivant -->
@@ -52,16 +76,26 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { onMounted } from 'vue'
+import { onMounted, nextTick } from 'vue'
 
 const route = useRoute()
 
-// @nuxt/content v3 : queryCollection + .path() + .first()
 const { data: doc } = await useAsyncData(
   () => `project-${route.params.slug}`,
-  () => queryCollection('projects')
-    .path(`/projects/${route.params.slug}`)
-    .first(),
+  async () => {
+    const slug = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
+    if (!slug) return null
+
+    const projectPath = `/projects/${slug}`
+    const byPath = await queryCollection('projects')
+      .path(projectPath)
+      .first()
+    if (byPath) return byPath
+
+    return queryCollection('projects')
+      .where('meta', 'LIKE', `%"slug":"${slug}"%`)
+      .first()
+  },
   { watch: [() => route.params.slug] },
 )
 
@@ -71,6 +105,11 @@ useSeoMeta({
 })
 
 onMounted(async () => {
+  // Force scroll to top on mount
+  await nextTick()
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+
+  // Animation
   const { gsap } = await import('gsap')
   gsap.from('.cs-hero > *', {
     opacity: 0, y: 30, duration: 0.8,

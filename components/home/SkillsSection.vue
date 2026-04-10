@@ -87,10 +87,11 @@ const techs = [
   { name: 'Laravel',     level: 'Amateur',  iconDesign: 'devicon:laravel',     pkg: 'laravel/framework',  version: '^11.0'   },
   { name: 'Java',        level: 'Débutant', iconDesign: 'devicon:java',        pkg: 'java',               version: '21 LTS'  },
   { name: 'Springboot',  level: 'Débutant', iconDesign: 'devicon:spring',      pkg: 'spring-boot',        version: '^3.3.0'  },
+  { name: "Node.js",     level: 'Amateur',  iconDesign: 'devicon:nodejs',      pkg: 'node',               version: '^20.0.0' },
 ]
 
 const tools = [
-  { name: 'Node.js',    icon: 'devicon:nodejs' },
+  { name: 'C' ,         icon: 'devicon:c' },
   { name: 'mySQL', icon: 'devicon:mysql' },
   { name: 'Docker',     icon: 'devicon:docker' },
   { name: 'Linux',         icon: 'devicon:linux',           level: 'Amateur'  },

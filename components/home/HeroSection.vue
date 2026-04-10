@@ -199,6 +199,7 @@ body.cmode .h-eyebrow::before {
   align-items: flex-end; position: relative; z-index: 1;
   opacity: 0; /* revealed by GSAP */
   transform: translateY(10px);
+  transition: opacity .35s ease, transform .35s ease;
 }
 #hero.hero-visible .h-foot {
   opacity: 1;
@@ -208,6 +209,7 @@ body.cmode .h-eyebrow::before {
 .n-inner {
   opacity: 0;
   transform: translateY(115%);
+  transition: opacity .35s ease, transform .35s ease;
 }
 #hero.hero-visible .n-inner {
   opacity: 1;
