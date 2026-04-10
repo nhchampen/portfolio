@@ -57,7 +57,6 @@ const asciiHero = `╔═══════════════════�
 
 const heroRef = ref<HTMLElement | null>(null)
 const animationStarted = ref(false)
-const HERO_ANIMATED_KEY = 'hero-animated'
 
 function revealHeroImmediately() {
   if (animationStarted.value || !heroRef.value) return
@@ -85,29 +84,17 @@ async function startHeroAnimation() {
 
   tl.eventCallback('onComplete', () => {
     window.__heroSectionAnimated = true
-    sessionStorage.setItem(HERO_ANIMATED_KEY, 'true')
   })
 }
 
 onMounted(() => {
-  const onLoaderDone = () => {
+  if (window.location.pathname !== '/') return
+
+  if ((window as any).__heroSectionAnimated) {
+    revealHeroImmediately()
+  } else {
     startHeroAnimation()
   }
-
-  if (window.location.pathname === '/') {
-    const alreadyAnimated = sessionStorage.getItem(HERO_ANIMATED_KEY) === 'true'
-    if (alreadyAnimated || (window as any).__heroSectionAnimated) {
-      revealHeroImmediately()
-    } else if ((window as any).__homeLoaderActive) {
-      window.addEventListener('loader-done', onLoaderDone, { once: true })
-    } else {
-      startHeroAnimation()
-    }
-  }
-
-  onBeforeUnmount(() => {
-    window.removeEventListener('loader-done', onLoaderDone)
-  })
 })
 </script>
 

@@ -110,4 +110,19 @@ nav.scrolled { padding: 0.85rem 3rem; }
   nav { padding: 1rem 1.5rem; }
   .nav-links { display: none; }
 }
+
+@media (max-width: 425px) {
+  .alt-pill {
+    display: flex !important;
+    position: fixed !important;
+    top: 4.5rem !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%);
+    z-index: 501;
+    margin: 0;
+    background: rgba(13, 13, 15, 0.95);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  }
+}
 </style>

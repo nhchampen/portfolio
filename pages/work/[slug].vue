@@ -58,10 +58,11 @@ const route = useRoute()
 
 // @nuxt/content v3 : queryCollection + .path() + .first()
 const { data: doc } = await useAsyncData(
-  `project-${route.params.slug}`,
+  () => `project-${route.params.slug}`,
   () => queryCollection('projects')
     .path(`/projects/${route.params.slug}`)
     .first(),
+  { watch: [() => route.params.slug] },
 )
 
 useSeoMeta({

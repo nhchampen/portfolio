@@ -21,9 +21,9 @@
     </ClientOnly>
 
     <!-- Layout -->
-    <div v-show="!showLoader">
+    <div v-if="!showLoader">
       <AppNav />
-      <NuxtPage />
+      <NuxtPage :key="route.fullPath" />
     </div>
   </div>
 </template>
