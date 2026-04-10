@@ -1,5 +1,5 @@
 <template>
-  <section id="hero">
+  <section id="hero" ref="heroRef">
     <div class="h-grid"></div>
     <div class="h-orb"></div>
     <div class="h-fade"></div>
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, onBeforeUnmount, ref } from 'vue'
 
 const asciiHero = `╔═══════════════════╗
 ║  <Portfolio />    ║
@@ -55,24 +55,59 @@ const asciiHero = `╔═══════════════════�
 ║  → Laravel React  ║
 ╚═══════════════════╝`
 
-onMounted(async () => {
-  const { gsap } = await import('gsap')
+const heroRef = ref<HTMLElement | null>(null)
+const animationStarted = ref(false)
+const HERO_ANIMATED_KEY = 'hero-animated'
 
-  gsap.timeline({ delay: 0.35 })
-    .to('.h-eyebrow', { opacity: 1, duration: .8, ease: 'power3.out' })
+function revealHeroImmediately() {
+  if (animationStarted.value || !heroRef.value) return
+  animationStarted.value = true
+  heroRef.value.classList.add('hero-visible')
+}
+
+async function startHeroAnimation() {
+  if (animationStarted.value || !import.meta.client) return
+  animationStarted.value = true
+
+  const { gsap } = await import('gsap')
+  const tl = gsap.timeline({ delay: 0.75 })
+    .set('.n-inner', { opacity: 0, y: '115%' })
+    .set('.h-foot', { opacity: 0, y: 10 })
+    .to('.h-eyebrow', { opacity: 1, duration: 1.1, ease: 'power3.out' })
     .to('.n-inner', {
       opacity: 1,
       y: 0,
-      duration: 1,
-      stagger: .14,
+      duration: 1.2,
+      stagger: .16,
       ease: 'power4.out',
-      onStart() {
-        document.querySelectorAll<HTMLElement>('.n-inner').forEach(el => {
-          el.style.transform = 'translateY(115%)'
-        })
-      },
-    }, '-=.5')
-    .to('.h-foot', { opacity: 1, y: 0, duration: .8, ease: 'power3.out' }, '-=.4')
+    }, '-=.7')
+    .to('.h-foot', { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, '-=.6')
+
+  tl.eventCallback('onComplete', () => {
+    window.__heroSectionAnimated = true
+    sessionStorage.setItem(HERO_ANIMATED_KEY, 'true')
+  })
+}
+
+onMounted(() => {
+  const onLoaderDone = () => {
+    startHeroAnimation()
+  }
+
+  if (window.location.pathname === '/') {
+    const alreadyAnimated = sessionStorage.getItem(HERO_ANIMATED_KEY) === 'true'
+    if (alreadyAnimated || (window as any).__heroSectionAnimated) {
+      revealHeroImmediately()
+    } else if ((window as any).__homeLoaderActive) {
+      window.addEventListener('loader-done', onLoaderDone, { once: true })
+    } else {
+      startHeroAnimation()
+    }
+  }
+
+  onBeforeUnmount(() => {
+    window.removeEventListener('loader-done', onLoaderDone)
+  })
 })
 </script>
 
@@ -133,28 +168,63 @@ onMounted(async () => {
 /* Eyebrow */
 .h-eyebrow {
   position: relative; height: 1.4em; margin-bottom: 1.4rem;
-  display: flex; align-items: center; gap: .7rem;
+  padding-left: calc(26px + .7rem);
+  display: flex; align-items: baseline;
   font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
   color: var(--muted);
   opacity: 0; /* revealed by GSAP */
+  transform: translateY(-8px);
+}
+#hero.hero-visible .h-eyebrow {
+  opacity: 1;
+  transform: translateY(0);
 }
 .h-eyebrow::before {
-  content: ''; flex-shrink: 0; width: 26px; height: 1px;
-  background: var(--ca); transition: background .4s;
+  content: ''; position: absolute; left: 0; top: 50%;
+  width: 26px; height: 1px;
+  transform: translateY(-50%);
+  background: var(--ca); transition: opacity .4s, background .4s;
 }
-.ey-d, .ey-c {
-  position: absolute;
-  left: calc(26px + .7rem);
+body.cmode .h-eyebrow::before {
+  opacity: 0;
+}
+.ey-d {
+  position: relative;
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity .4s, transform .4s;
 }
-.ey-d { opacity: 1; transform: translateY(0); }
-.ey-c { font-family: var(--fc); color: var(--warm); opacity: 0; transform: translateY(8px); }
+.ey-c {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  white-space: nowrap;
+  font-family: var(--fc);
+  color: var(--warm);
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: opacity .4s, transform .4s;
+}
 
 /* Hero foot */
 .h-foot {
   display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
   align-items: flex-end; position: relative; z-index: 1;
   opacity: 0; /* revealed by GSAP */
+  transform: translateY(10px);
+}
+#hero.hero-visible .h-foot {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.n-inner {
+  opacity: 0;
+  transform: translateY(115%);
+}
+#hero.hero-visible .n-inner {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .h-desc {

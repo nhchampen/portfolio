@@ -13,13 +13,18 @@
       <span v-if="!mode.isCode">mode design</span>
       <span v-else>// mode code</span>
     </div>
-
+    <!-- Background overlay during loading -->
+    <div class="loading-overlay" :class="{ 'is-visible': showLoader }"></div>
     <!-- Loader — uniquement page d'accueil, une seule fois par session -->
-    <AppLoader v-if="showLoader" />
+    <ClientOnly>
+      <TerminalLoader v-if="showLoader" />
+    </ClientOnly>
 
     <!-- Layout -->
-    <AppNav />
-    <NuxtPage />
+    <div v-show="!showLoader">
+      <AppNav />
+      <NuxtPage />
+    </div>
   </div>
 </template>
 
@@ -29,24 +34,47 @@ import { useRoute } from 'vue-router'
 import { useModeStore } from '~/stores/mode'
 import { useLenis } from '~/composables/useLenis'
 import { useCursor } from '~/composables/useCursor'
+import TerminalLoader from '~/components/layout/TerminalLoader.vue'
 
 const mode  = useModeStore()
 const route = useRoute()
 
-// Loader : uniquement page d'accueil + une seule fois par session
-const showLoader = ref(
-  import.meta.client
-    ? route.path === '/' && !sessionStorage.getItem('loader-done')
-    : false,
-)
+// Loader : uniquement page d'accueil, à chaque chargement
+const showLoader = ref(route.path === '/')
+
+if (import.meta.client) {
+  window.__homeLoaderActive = showLoader.value
+}
+
 if (import.meta.client && showLoader.value) {
-  sessionStorage.setItem('loader-done', '1')
+  window.addEventListener('loader-done', () => {
+    showLoader.value = false
+    window.__homeLoaderActive = false
+  }, { once: true })
 }
 useLenis()
 useCursor()
 </script>
 
-<style scoped>
+<style scoped>.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+  z-index: 9998; /* Below loader */
+}
+
+.loading-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.loading-overlay + * {
+  position: relative;
+  z-index: 9999;
+}
 /* ── Cursor ──
    Pas de mix-blend-mode : devient invisible sur fond sombre.
    On utilise un simple dot + ring sans blend.
