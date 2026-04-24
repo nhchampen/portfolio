@@ -39,7 +39,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 3rem;
-  background: rgba(13, 13, 15, 0.92);
+  background: rgba(var(--bg-rgb), 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
@@ -62,7 +62,7 @@ nav.scrolled { padding: 0.85rem 3rem; }
   align-items: center;
   gap: 0.4rem;
   padding: 0.25rem 0.7rem;
-  border: 1px solid rgba(184, 255, 87, 0.2);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
   border-radius: 100px;
   font-family: var(--fc);
   font-size: 0.58rem;
@@ -121,7 +121,7 @@ nav.scrolled { padding: 0.85rem 3rem; }
     transform: translateX(-50%);
     z-index: 501;
     margin: 0;
-    background: rgba(13, 13, 15, 0.95);
+    background: rgba(var(--bg-rgb), 0.95);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
   }
 }

@@ -7,33 +7,61 @@
    DESIGN TOKENS
 ═══════════════════════════════════════ */
 :root {
-  --bg:     #0D0D0F;
-  --bg2:    #141416;
-  --bg3:    #1C1C1F;
-  --text:   #F0EDEA;
-  --muted:  #6A6A74;
-  --faint:  #2A2A2E;
-  --accent: #B8FF57;
+  /* Couleurs de fond claires */
+  --bg:     #F7F7F9;
+  --bg2:    #FFFFFF;
+  --bg3:    #EBEBEF;
+  --bg-rgb: 247, 247, 249;
+  
+  /* Textes sombres */
+  --text:   #131314;
+  --text-rgb: 19, 19, 20;
+  
+  --muted:  #4A4A52;
+  --faint:  #B8B8C0;
+  
+  /* Couleurs d'accent */
+  --accent: #3A9D23;
+  --accent-rgb: 58, 157, 35;
+  
   --warm:   #FF6B35;
-  --border: rgba(240,237,234,.07);
+  --warm-rgb: 255, 107, 53;
+  
+  --border: rgba(var(--text-rgb), .30);
   --fd: 'Syne', sans-serif;
   --fb: 'DM Sans', sans-serif;
   --fc: 'JetBrains Mono', monospace;
 
   /* --ca = couleur active. Vaut --accent par défaut, --warm en mode code.
      Utilisée dans tous les composants — se propage même dans les scoped styles. */
-  --ca: #B8FF57;
+  --ca: var(--accent);
 }
 
 body.cmode {
-  --ca: #FF6B35;
+  /* Retour aux couleurs sombres actuelles */
+  --bg:     #1E1E20;
+  --bg2:    #2A2A2E;
+  --bg3:    #323236;
+  --bg-rgb: 30, 30, 32;
+  
+  --text:   #F0EDEA;
+  --text-rgb: 240, 237, 234;
+  
+  --muted:  #A0A0A8;
+  --faint:  #38383C;
+  
+  --accent: #B8FF57;
+  --accent-rgb: 184, 255, 87;
+  
+  --border: rgba(var(--text-rgb), .12);
+  --ca: var(--warm);
 }
 
 /* ═══════════════════════════════════════
    BASE
 ═══════════════════════════════════════ */
-html { background: var(--bg); color: var(--text); scroll-behavior: smooth; }
-body { font-family: var(--fb); font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--fb); font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; min-height: 100vh; }
 
 /* ═══════════════════════════════════════
    PAGE TRANSITIONS
@@ -76,7 +104,7 @@ body { font-family: var(--fb); font-size: 16px; line-height: 1.6; overflow-x: hi
   font-family: var(--fc);
   font-size: .62rem;
   line-height: 1.55;
-  color: rgba(184,255,87,.22);
+  color: rgba(var(--accent-rgb), .65);
   letter-spacing: .04em;
   user-select: none;
   white-space: pre;
@@ -84,8 +112,8 @@ body { font-family: var(--fb); font-size: 16px; line-height: 1.6; overflow-x: hi
   pointer-events: none;
 }
 .ascii.lit {
-  color: rgba(184,255,87,.75);
-  text-shadow: 0 0 18px rgba(184,255,87,.25);
+  color: rgba(var(--accent-rgb), .75);
+  text-shadow: 0 0 18px rgba(var(--accent-rgb), .25);
 }
 
 /* ═══════════════════════════════════════
@@ -107,7 +135,7 @@ body { font-family: var(--fb); font-size: 16px; line-height: 1.6; overflow-x: hi
 .n-inner { display: block; transform: translateY(115%); opacity: 0; }
 .n-ghost {
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(240,237,234,.1);
+  -webkit-text-stroke: 1.5px rgba(var(--text-rgb), .30);
   transition: -webkit-text-stroke-color .6s;
 }
 .code-pre {
@@ -137,7 +165,7 @@ body.cmode #app-cursor {
   background: var(--warm);
   animation: blink .9s step-end infinite;
 }
-body.cmode #app-cursor-ring { border-color: rgba(255,107,53,.3); }
+body.cmode #app-cursor-ring { border-color: rgba(var(--warm-rgb), .3); }
 body.cmode #app-scanline    { background: linear-gradient(transparent, var(--warm), transparent); }
 
 /* Mode bar */
@@ -146,7 +174,7 @@ body.cmode .mb-dot { background: var(--warm); }
 /* Nav */
 body.cmode .nav-logo em        { color: var(--warm); }
 body.cmode .nav-links a::after { background: var(--warm); }
-body.cmode .alt-pill           { color: var(--warm); border-color: rgba(255,107,53,.2); }
+body.cmode .alt-pill           { color: var(--warm); border-color: rgba(var(--warm-rgb), .2); }
 body.cmode .alt-dot            { background: var(--warm); }
 
 /* Toggle */
@@ -155,18 +183,18 @@ body.cmode .toggle-lbl.c { color: var(--warm);  opacity: 1; }
 body.cmode .toggle-thumb  { transform: translateX(15px); background: var(--warm); }
 
 /* ASCII */
-body.cmode .ascii     { color: rgba(255,107,53,.2); }
-body.cmode .ascii.lit { color: rgba(255,107,53,.7); text-shadow: 0 0 18px rgba(255,107,53,.2); }
+body.cmode .ascii     { color: rgba(var(--warm-rgb), .2); }
+body.cmode .ascii.lit { color: rgba(var(--warm-rgb), .7); text-shadow: 0 0 18px rgba(var(--warm-rgb), .2); }
 
 /* Bouton principal */
 body.cmode .btn-main { background: var(--warm); }
 
 /* Hero */
-body.cmode .h-orb               { background: radial-gradient(circle, rgba(255,107,53,.09) 0%, transparent 68%); }
+body.cmode .h-orb               { background: radial-gradient(circle, rgba(var(--warm-rgb), .09) 0%, transparent 68%); }
 body.cmode .h-eyebrow::before   { background: var(--warm); }
 body.cmode .ey-d                { opacity: 0; transform: translateY(-8px); }
 body.cmode .ey-c                { opacity: 1; transform: translateY(0); }
-body.cmode .n-ghost             { -webkit-text-stroke-color: rgba(255,107,53,.28); }
+body.cmode .n-ghost             { -webkit-text-stroke-color: rgba(var(--warm-rgb), .28); }
 body.cmode .code-pre            { opacity: 1; transform: translateX(0); }
 body.cmode .hd-d                { opacity: 0; transform: translateY(-10px); }
 body.cmode .hd-c                { opacity: 1; transform: translateY(0); }
@@ -188,13 +216,13 @@ body.cmode .sk-eyebrow { color: var(--warm); }
 body.cmode .tc::after  { background: var(--warm); }
 
 /* Duality */
-body.cmode .du-bg  { -webkit-text-stroke-color: rgba(255,107,53,.1); }
-body.cmode .du-q .d { color: rgba(184,255,87,.25); }
+body.cmode .du-bg  { -webkit-text-stroke-color: rgba(var(--warm-rgb), .1); }
+body.cmode .du-q .d { color: rgba(var(--accent-rgb), .25); }
 body.cmode .du-q .c { color: var(--warm); }
 
 /* Contact / Footer */
 body.cmode .ct-cta a:hover          { color: var(--warm); }
-body.cmode .ct-bg                   { -webkit-text-stroke-color: rgba(255,107,53,.08); }
+body.cmode .ct-bg                   { -webkit-text-stroke-color: rgba(var(--warm-rgb), .08); }
 body.cmode .avail-dot               { background: var(--warm); }
 body.cmode .ft-logo em              { color: var(--warm); }
 

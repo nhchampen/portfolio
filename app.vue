@@ -99,14 +99,14 @@ useCursor()
 .app-cursor-ring {
   position: fixed;
   width: 32px; height: 32px;
-  border: 1px solid rgba(184, 255, 87, 0.35);
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
   transition: border-color .4s, width .3s, height .3s;
 }
-.app-cursor-ring.cmode { border-color: rgba(255, 107, 53, 0.35); }
+.app-cursor-ring.cmode { border-color: rgba(var(--warm-rgb), 0.35); }
 
 /* ── Scanline ──
    Positionnement non-ambigu : pas d'inset (conflits avec top/height).
@@ -144,7 +144,7 @@ useCursor()
   align-items: center;
   gap: 0.5rem;
   pointer-events: none;
-  background: rgba(13, 13, 15, 0.75);
+  background: rgba(var(--bg-rgb), 0.75);
   padding: 0.35rem 0.75rem;
   border-radius: 100px;
   border: 1px solid var(--border);

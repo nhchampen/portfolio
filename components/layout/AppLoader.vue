@@ -166,8 +166,11 @@ onMounted(async () => {
 
 <style scoped>
 .loader {
+  --text: #F0EDEA;
+  --muted: #6A6A74;
+  --ca: #B8FF57;
   position: fixed; inset: 0; z-index: 9999;
-  background: var(--bg);
+  background: #1E1E20;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
@@ -215,7 +218,7 @@ onMounted(async () => {
 .lo-n-first, .lo-n-last {
   font-family: var(--fd); font-weight: 800;
   font-size: clamp(4.5rem, 14vw, 11rem);
-  letter-spacing: -0.045em; line-height: 0.88; color: var(--text);
+  letter-spacing: -0.045em; line-height: 0.88; color: #F0EDEA;
 }
 .lo-n-last {
   color: transparent;
@@ -231,7 +234,7 @@ onMounted(async () => {
   text-transform: uppercase; white-space: nowrap;
   transition: opacity 0.4s, transform 0.4s;
 }
-.lo-tg-d { color: var(--muted); opacity: 1; }
+.lo-tg-d { color: #6A6A74; opacity: 1; }
 .lo-tg-c {
   font-family: var(--fc); color: var(--ca); opacity: 0;
   transform: translateX(-50%) translateY(8px);

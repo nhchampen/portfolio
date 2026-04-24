@@ -150,7 +150,7 @@ const blobColor = computed(() => props.blobColor ?? 'var(--ca)')
   flex-direction: column;
 }
 a.pcard { display: flex; flex-direction: column; text-decoration: none; }
-.pcard:hover { border-color: rgba(240, 237, 234, 0.2); }
+.pcard:hover { border-color: rgba(var(--text-rgb), 0.2); }
 
 .pcard a { 
   text-decoration: none;
@@ -192,8 +192,8 @@ a.pcard { display: flex; flex-direction: column; text-decoration: none; }
   position: absolute; inset: 0;
   background: repeating-linear-gradient(
     -45deg, transparent, transparent 12px,
-    rgba(240, 237, 234, 0.02) 12px,
-    rgba(240, 237, 234, 0.02) 13px
+    rgba(var(--text-rgb), 0.02) 12px,
+    rgba(var(--text-rgb), 0.02) 13px
   );
 }
 .pt-blob {
@@ -210,7 +210,7 @@ a.pcard { display: flex; flex-direction: column; text-decoration: none; }
   position: absolute;
   bottom: 0; left: 0; right: 0;
   padding: 0.75rem 1rem;
-  background: linear-gradient(to top, rgba(13, 13, 15, 0.9), transparent);
+  background: linear-gradient(to top, rgba(var(--bg-rgb), 0.9), transparent);
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
@@ -223,16 +223,16 @@ a.pcard { display: flex; flex-direction: column; text-decoration: none; }
   font-size: 0.6rem;
   letter-spacing: 0.07em;
   padding: 0.22rem 0.55rem;
-  border: 1px solid rgba(240, 237, 234, 0.15);
+  border: 1px solid rgba(var(--text-rgb), 0.15);
   color: var(--muted);
-  background: rgba(13, 13, 15, 0.7);
+  background: rgba(var(--bg-rgb), 0.7);
 }
 
 /* Code overlay */
 .code-ov {
   position: absolute;
   inset: 0; bottom: auto;
-  background: rgba(13, 13, 15, 0.96);
+  background: rgba(var(--bg-rgb), 0.96);
   padding: 1.2rem;
   display: flex;
   flex-direction: column;
@@ -283,7 +283,7 @@ a.pcard { display: flex; flex-direction: column; text-decoration: none; }
   font-size: 1.05rem;
   letter-spacing: -0.01em;
   transition: color 0.3s;
-  color: #fff;
+  color: var(--text);
 }
 .pcard:hover .pn { color: var(--ca); }
 

@@ -19,6 +19,10 @@ export default defineContentConfig({
           title: z.string(),
           slug:  z.string(),
         }).optional(),
+        links: z.array(z.object({
+          url: z.string(),
+          label: z.string(),
+        })).optional(),
       }),
     }),
   },

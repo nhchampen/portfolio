@@ -96,7 +96,7 @@ onMounted(async () => {
 
 .terminal-body {
   width: 100%; height: 100%;
-  color: #fff;
+  color: var(--text);
   font-size: 12px;
   line-height: 1.2;
   display: flex; flex-direction: column; justify-content: flex-end;
@@ -118,7 +118,7 @@ onMounted(async () => {
 }
 
 .command {
-  color: #fff;
+  color: var(--text);
 }
 
 .output {

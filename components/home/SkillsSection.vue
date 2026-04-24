@@ -142,7 +142,7 @@ onMounted(async () => {
   cursor: default;
   transition: border-color 0.35s;
 }
-.tech-card:hover { border-color: rgba(240,237,234,.2); }
+.tech-card:hover { border-color: rgba(var(--text-rgb), .2); }
 
 .tc-bar {
   position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
@@ -169,7 +169,7 @@ onMounted(async () => {
   background: var(--bg3); border: 1px solid var(--border);
   transition: border-color 0.3s, transform 0.3s; flex-shrink: 0;
 }
-.tech-card:hover .tc-icon-wrap { border-color: rgba(240,237,234,.2); transform: scale(1.08); }
+.tech-card:hover .tc-icon-wrap { border-color: rgba(var(--text-rgb), .2); transform: scale(1.08); }
 .tc-nm { font-size: 0.78rem; font-weight: 500; text-align: center; }
 .tc-lv { font-family: var(--fc); font-size: 0.55rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); text-align: center; }
 
@@ -194,7 +194,7 @@ onMounted(async () => {
 
 .tools-row { margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
 .tool-pill { font-family: var(--fc); font-size: 0.62rem; letter-spacing: 0.07em; padding: 0.28rem 0.65rem; border: 1px solid var(--faint); color: var(--muted); display: inline-flex; align-items: center; gap: 0.35rem; transition: color 0.3s, border-color 0.3s; cursor: default; }
-.tool-pill:hover { color: var(--text); border-color: rgba(240,237,234,.2); }
+.tool-pill:hover { color: var(--text); border-color: rgba(var(--text-rgb), .2); }
 
 @media (max-width: 960px) {
   #skills { padding: 5rem 1.5rem; }

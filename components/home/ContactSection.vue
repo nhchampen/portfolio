@@ -38,7 +38,7 @@
         <div class="ft-links-mobile">
           <a href="https://github.com/nhchampen">GitHub</a>
           <a href="https://www.linkedin.com/in/nohan-c-1759a7392/" target="_blank">LinkedIn</a>
-          <a href="/CV_Nohan_Mars2026_t2.pdf" target="_blank">CV PDF</a>
+          <a href="/CV_nohan_champenoisAvril2026.pdf" target="_blank">CV PDF</a>
         </div>
       </div>
       <div class="ft-copy">© 2026 · Vue.js · Handcrafted</div>
@@ -47,7 +47,7 @@
       <div class="ft-links">
         <a href="https://github.com/nhchampen">GitHub</a>
         <a href="https://www.linkedin.com/in/nohan-c-1759a7392/" target="_blank">LinkedIn</a>
-        <a href="/CV_Nohan_Mars2026_t2.pdf" target="_blank">CV PDF</a>
+        <a href="/CV_nohan_champenoisAvril2026.pdf" target="_blank">CV PDF</a>
       </div>
     </div>
   </footer>

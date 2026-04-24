@@ -54,36 +54,42 @@ async function setFilter(val: string) {
 const asciiWork = `┌───────────────────┐
 │  $ ls ./projects  │
 ├───────────────────┤
-│  01_connectin/    │
-│  02_connectinv2/  │
-│  03_icom/         │
-│  04_mycinema/     │
-│  05_vitaepresss/  │
-│  06_klivio/       │
-│  07_socialbrand/  │
-│  08_logotype/     │
-│  09_designcollec/ │
+│  01_jeuvideops/   │
+│  02_connectin/    │
+│  03_connectinv2/  │
+│  04_icom/         │
+│  05_mycinema/     │
+│  06_vitaepresss/  │
+│  07_klivio/       │
 └───────────────────┘`
 
 const projects = [
   {
-    num: '01', title: 'ConnectIn', meta: 'Réseau Social ESN · 2026',
-    slug: 'connectin',
+    num: '01', title: 'Retro Games CI/CD', meta: 'Pipeline DevOps · 2024',
+    slug: 'jeuvideops',
     type: 'dev' as const, size: 'large' as const,
-    tags: ['Vue 3', 'Nuxt', 'Laravel', 'Springboot', 'Migration'],
+    tags: ['GitHub Actions', 'Docker', 'Jest', 'Gitleaks'],
     blobColor: 'var(--ca)',
+    codeHtml: `<div><span class="s-cm">// CI/CD Pipeline configuration</span></div><div><span class="s-kw">name</span>: <span class="s-st">Retro Games CI/CD</span></div><div><span class="s-cm">// Automated security scan</span></div>`,
+  },
+  {
+    num: '02', title: 'ConnectIn', meta: 'Réseau Social ESN · 2026',
+    slug: 'connectin',
+    type: 'dev' as const, size: 'small' as const,
+    tags: ['Vue 3', 'Nuxt', 'Laravel', 'Springboot', 'Migration'],
+    blobColor: 'var(--accent)',
     codeHtml: `<div><span class="s-cm">// ESN social feed</span></div><div><span class="s-kw">const</span> posts = <span class="s-kw">await</span> <span class="s-fn">useFetch</span>(<span class="s-st">'/api/posts'</span>)</div><div><span class="s-cm">// migration Laravel → Spring Boot</span></div>`,
   },
   {
-    num: '02', title: 'ConnectInV2', meta: 'Réseau Social ESN · 2027',
+    num: '03', title: 'ConnectInV2', meta: 'Réseau Social ESN · 2027',
     slug: 'connectinv2',
-    type: 'dev' as const, size: 'small' as const,
+    type: 'dev' as const, size: 'half' as const,
     tags: ['Nuxt', 'Laravel', 'TypeScript', 'API'],
-    blobColor: 'var(--accent)',
+    blobColor: 'var(--warm)',
     codeHtml: `<div><span class="s-cm">// V2 API contract versioning</span></div><div><span class="s-kw">const</span> feed = <span class="s-kw">await</span> <span class="s-fn">fetch</span>(<span class="s-st">'/api/v2/feed'</span>)</div><div><span class="s-cm">// typed response with TypeScript</span></div>`,
   },
   {
-    num: '03', title: 'Icom Studio', meta: 'Refonte Site Studio · 2026',
+    num: '04', title: 'Icom Studio', meta: 'Refonte Site Studio · 2026',
     externalUrl: 'https://studio-icom.fr/',
     type: 'dev' as const, size: 'half' as const,
     tags: ['HTML', 'CSS', 'Javascript', 'NodeJs'],
@@ -91,7 +97,7 @@ const projects = [
     codeHtml: `<div><span class="s-cm">// Studio landing page</span></div><div><span class="s-kw">document</span>.<span class="s-fn">querySelector</span>(<span class="s-st">'#hero'</span>).<span class="s-fn">classList.add</span>(<span class="s-st">'loaded'</span>)</div><div><span class="s-cm">// Node.js tooling & animations</span></div>`,
   },
   {
-    num: '04', title: 'MyCinema', meta: 'Plateforme de cinéma · 2026',
+    num: '05', title: 'MyCinema', meta: 'Plateforme de cinéma · 2026',
     slug: 'mycinema',
     type: 'dev' as const, size: 'half' as const,
     tags: ['Vue', 'Tailwind', 'API', 'UX'],
@@ -99,17 +105,17 @@ const projects = [
     codeHtml: `<div><span class="s-cm">// Cinema discovery app</span></div><div><span class="s-kw">const</span> movies = <span class="s-kw">await</span> <span class="s-fn">fetch</span>(<span class="s-st">'/api/movies'</span>)</div><div><span class="s-cm">// smart filtering and UX</span></div>`,
   },
   {
-    num: '05', title: 'VitaePresss', meta: 'Génerateur de CV · 2026',
+    num: '06', title: 'VitaePresss', meta: 'Génerateur de CV · 2026',
     slug: 'vitaepresss',
-    type: 'dev' as const, size: 'half' as const,
+    type: 'dev' as const, size: 'small' as const,
     tags: ['Tailwind', 'Javascript', 'PHP'],
     blobColor: '#7B61FF',
     codeHtml: `<div><span class="s-cm">// CV builder</span></div><div><span class="s-kw">const</span> pdf = <span class="s-fn">generateResume</span>(<span class="s-vr">profile</span>)</div><div><span class="s-cm">// Tailwind styling + PHP backend</span></div>`,
   },
   {
-    num: '06', title: 'Klivio Intégration', meta: 'Intégration frontend · 2025',
+    num: '07', title: 'Klivio Intégration', meta: 'Intégration frontend · 2025',
     slug: 'klivio',
-    type: 'dev' as const, size: 'wide' as const,
+    type: 'dev' as const, size: 'large' as const,
     tags: ['HTML', 'SCSS', 'Boostrap'],
     blobColor: 'var(--accent)',
     codeHtml: `<div><span class="s-cm">// Responsive integration</span></div><div><span class="s-kw">const</span> nav = <span class="s-fn">document.querySelector</span>(<span class="s-st">'.navbar'</span>)</div><div><span class="s-cm">// SCSS + Bootstrap layout</span></div>`,
@@ -169,7 +175,7 @@ onMounted(async () => {
   border: 1px solid var(--border); background: none; color: var(--muted);
   cursor: pointer; transition: color 0.3s, border-color 0.3s, background 0.3s;
 }
-.wf-btn.on, .wf-btn:hover { color: var(--text); border-color: rgba(240, 237, 234, 0.2); background: var(--bg3); }
+.wf-btn.on, .wf-btn:hover { color: var(--text); border-color: rgba(var(--text-rgb), 0.2); background: var(--bg3); }
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);

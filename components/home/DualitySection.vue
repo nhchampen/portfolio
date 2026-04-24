@@ -80,9 +80,9 @@ onMounted(async () => {
   top: 50%; left: 50%;
   animation: rOrbit linear infinite;
 }
-.du-r1 { width:360px;height:360px;margin:-180px 0 0 -180px;border-color:rgba(184,255,87,.07);animation-duration:25s; }
-.du-r2 { width:560px;height:560px;margin:-280px 0 0 -280px;border-color:rgba(255,107,53,.05);animation-duration:35s;animation-direction:reverse; }
-.du-r3 { width:780px;height:780px;margin:-390px 0 0 -390px;border-color:rgba(240,237,234,.03);animation-duration:55s; }
+.du-r1 { width:360px;height:360px;margin:-180px 0 0 -180px;border-color:rgba(var(--accent-rgb),.07);animation-duration:25s; }
+.du-r2 { width:560px;height:560px;margin:-280px 0 0 -280px;border-color:rgba(var(--warm-rgb),.05);animation-duration:35s;animation-direction:reverse; }
+.du-r3 { width:780px;height:780px;margin:-390px 0 0 -390px;border-color:rgba(var(--text-rgb),.03);animation-duration:55s; }
 @keyframes rOrbit { from{transform:rotate(0deg);}to{transform:rotate(360deg);} }
 
 .du-content { position: relative; z-index: 1; text-align: center; max-width: 800px; }

@@ -15,6 +15,20 @@
       <div class="cs-tags">
         <span v-for="tag in doc.tags" :key="tag" class="cs-tag">{{ tag }}</span>
       </div>
+
+      <!-- Liens externes -->
+      <div class="cs-actions" v-if="doc.links?.length">
+        <a 
+          v-for="link in doc.links" 
+          :key="link.label" 
+          :href="link.url" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="cs-btn"
+        >
+          {{ link.label }} ↗
+        </a>
+      </div>
     </section>
 
     <!-- Stats -->
@@ -155,6 +169,23 @@ onMounted(async () => {
 .cs-tag {
   font-family: var(--fc); font-size: 0.65rem; letter-spacing: 0.08em;
   padding: 0.3rem 0.75rem; border: 1px solid var(--faint); color: var(--muted);
+}
+
+.cs-actions {
+  display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 2.5rem;
+}
+.cs-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  font-family: var(--fc); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text); text-decoration: none;
+  transition: border-color 0.3s, background 0.3s;
+}
+.cs-btn:hover {
+  border-color: rgba(var(--text-rgb), 0.3);
+  background: var(--bg3);
 }
 
 /* ── Stats ── */

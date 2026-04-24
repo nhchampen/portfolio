@@ -126,7 +126,7 @@ onMounted(() => {
 .h-orb {
   position: absolute; top: 10%; right: 6%;
   width: 380px; height: 380px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(184,255,87,.1) 0%, transparent 68%);
+  background: radial-gradient(circle, rgba(var(--accent-rgb),.1) 0%, transparent 68%);
   pointer-events: none;
   transition: background 1s;
   animation: orbDrift 9s ease-in-out infinite;
